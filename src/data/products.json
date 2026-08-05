@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "name": "Laptop Asus PX3",
+        "price": 1500
+    },
+    {
+        "id": 2,
+        "name": "Iphone 15 Pro Max",
+        "price": 2500
+    },
+    {
+        "id": 3,
+        "name": "Headphone Sony MX1",
+        "price": 1800
+    },
+    {
+        "id": 4,
+        "name": "Keyboard XGame",
+        "price": 1000
+    },
+    {
+        "id": 5,
+        "name": "Gaming Mouse MX2",
+        "price": 1700
+    }
+]

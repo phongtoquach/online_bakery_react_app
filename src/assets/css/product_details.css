@@ -1,0 +1,14 @@
+.product-details-section .product-detail-actions {
+    margin-top: 35px;
+}
+
+.product-details-section .quantity-selector {
+    margin-bottom: 5px;
+}
+
+.product-details-section .quantity-error-box {
+    color: red;
+    margin-bottom: 15px;
+    margin-left: 90px;
+    transition: opacity 0.4s ease;
+}
