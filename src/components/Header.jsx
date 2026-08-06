@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
-import { NavLink } from "react-router";
+import { NavLink, Link } from "react-router";
 
 import ProductContext from "../context/ProductContext";
 import CartContext from "../context/CartContext";
 
 function Header() {
 
-    const { studentName } = useContext(ProductContext);
+    //const { studentName } = useContext(ProductContext);
 
     useEffect(() => {
         console.log("[Header] đang chạy useEffect() của component Header !");
@@ -22,15 +22,15 @@ function Header() {
     return (
         <header className="header">
             <div className="container">
-                <a href="index.html" className="logo">
+                <Link to="/" className="logo">
                     <div className="logo-image">
-                        <img src="images/web_logo_small.png" alt="Logo Maison Sweet Bakery"/>
+                        <img src="/images/web_logo_small.png" alt="Logo Maison Sweet Bakery"/>
                     </div>
                     <div className="logo-text">
                         Maison Sweet Bakery
                         <small>Bakery &amp; Patisserie</small>
                     </div>
-                </a>
+                </Link>
                 <nav className="nav-menu">
                     <NavLink to="/" end className={ ({isActive}) => isActive ? "nav-link active" : "nav-link" }><i className="fas fa-home"></i> Trang chủ</NavLink>
                     <NavLink to="/products" end className={ ({isActive}) => isActive ? "nav-link active" : "nav-link" }><i className="fas fa-th-large"></i> Sản phẩm</NavLink>
@@ -46,7 +46,6 @@ function Header() {
                     <span className="cart-badge" id="headerCartBadgeText"></span>
                 </NavLink>
             </div>
-            <p>{studentName}</p>
         </header>
     )
 }

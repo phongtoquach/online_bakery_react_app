@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 import { useEffect } from 'react';
 
+import ProductsGrid from "../components/ProductsGrid";
+
 function Home() {
 
     useEffect(() => {
@@ -17,7 +19,22 @@ function Home() {
 
     return (
         <>
-            
+            <section className="section" style={{ paddingBottom: '75px' }}>
+                <div className="container">
+                    <div className="section-title">
+                        <h2>Bánh mới ra mắt</h2>
+                        <p>Khám phá những mẫu bánh mới nhất, được chế biến tỉ mỉ để mang đến trải nghiệm ngọt ngào cho mọi dịp.</p>
+                    </div>
+
+                    <ProductsGrid/>
+
+                    <div style={{ textAlign: 'center', marginTop: 'var(--space-2xl)' }}>
+                        <Link to="/products" className="btn btn-outline">
+                            <i className="fas fa-th-large"></i> Xem thêm
+                        </Link>
+                    </div>
+                </div>
+            </section>
             
             <section className="section" style={{ backgroundColor: '#ffffff' }}>
                 <div className="container">

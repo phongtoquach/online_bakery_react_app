@@ -35,7 +35,7 @@ function App() {
       <ProductProvider>
         <CartProvider>
           <Header/>
-          <SubHeader/>
+          {/* <SubHeader/> */}
 
           <Routes>
             <Route path="/" element={<Home/>} />

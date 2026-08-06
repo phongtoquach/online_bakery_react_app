@@ -1,14 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 
-import productsList from "../data/products.json";
+import productsData from "../data/products_data";
 
 const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
 
-    const [studentName, setStudentName] = useState("phong quach");
-
-    const newProductsList = structuredClone(productsList);
+    //const [studentName, setStudentName] = useState("phong quach");
 
     useEffect(() => {
         console.log("[ProductProvider] đang chạy useEffect() của ProductProvider !");
@@ -21,8 +19,11 @@ export function ProductProvider({ children }) {
 
     console.log("[ProductProvider] ProductProvider được render !");
 
+    console.log("[ProductProvider] Data của mảng productsData vua lay tu file js : ");
+    console.log(productsData);
+
     return (
-        <ProductContext.Provider value={{ studentName, setStudentName, newProductsList }}>
+        <ProductContext.Provider value={{ productsList: productsData }}>
             {children}
         </ProductContext.Provider>
     )
