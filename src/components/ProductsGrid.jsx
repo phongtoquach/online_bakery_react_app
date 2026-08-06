@@ -54,7 +54,11 @@ function ProductsGrid() {
                                         <div className="product-card-image">
                                             <Link to={productDetailsUrl}>
                                                 <img src={productImageSrc} alt={product.name}/>
-                                                <span className="product-card-tag">Rất Nổi bật</span>
+                                                {
+                                                    product.isFeatured && (
+                                                        <span className="product-card-tag">Nổi bật</span>
+                                                    )
+                                                }
                                             </Link>
                                         </div>
                                         <div className="product-card-body">
