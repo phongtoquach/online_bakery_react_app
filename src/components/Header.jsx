@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
 import { NavLink, Link } from "react-router";
 
-import ProductContext from "../context/ProductContext";
+//import ProductContext from "../context/ProductContext";
 import CartContext from "../context/CartContext";
 
 function Header() {
 
-    //const { studentName } = useContext(ProductContext);
+    const { cart } = useContext(CartContext);
 
     useEffect(() => {
         console.log("[Header] đang chạy useEffect() của component Header !");
@@ -17,7 +17,8 @@ function Header() {
         };
     });
 
-    console.log("[Header] component Header render !");
+    console.log("[Header] component Header render ! Data của cart :");
+    console.log(cart);
    
     return (
         <header className="header">
@@ -43,7 +44,7 @@ function Header() {
                 </div>
                 <NavLink to="/cart" className="cart-icon">
                     <i className="fas fa-shopping-cart"></i>
-                    <span className="cart-badge" id="headerCartBadgeText"></span>
+                    <span className="cart-badge" id="headerCartBadgeText">{cart.length}</span>
                 </NavLink>
             </div>
         </header>

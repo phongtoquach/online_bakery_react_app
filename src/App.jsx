@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router';
 
 import { ProductProvider } from './context/ProductContext';
 import { CartProvider } from './context/CartContext';
+import { ToastBoxProvider } from './context/ToastBoxContext';
 
 import Home from "./pages/Home";
 import ProductsPage from "./pages/ProductsPage";
@@ -32,16 +33,17 @@ function App() {
     <>
       <ProductProvider>
         <CartProvider>
-          <Header/>
-          {/* <SubHeader/> */}
+          <ToastBoxProvider>
+            <Header/>
 
-          <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/products" element={<ProductsPage/>} />
-            <Route path="/products/:productId/:slug" element={<ProductDetailsPage/>} />
-            <Route path="/cart" element={<CartPage/>} />
-            <Route path="/contact" element={<ContactPage/>} />
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Home/>} />
+              <Route path="/products" element={<ProductsPage/>} />
+              <Route path="/products/:productId/:slug" element={<ProductDetailsPage/>} />
+              <Route path="/cart" element={<CartPage/>} />
+              <Route path="/contact" element={<ContactPage/>} />
+            </Routes>
+          </ToastBoxProvider>
         </CartProvider>
       </ProductProvider>
 

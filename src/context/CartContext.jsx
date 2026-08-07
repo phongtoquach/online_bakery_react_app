@@ -192,7 +192,7 @@ export function CartProvider({ children }) {
     console.log("[CartProvider] CartProvider được render !");
 
     return (
-        <CartContext.Provider value={{ addProductToCart }}>
+        <CartContext.Provider value={{ cart, addProductToCart }}>
             {children}
         </CartContext.Provider>
     )
