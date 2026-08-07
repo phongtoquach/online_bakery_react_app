@@ -10,7 +10,7 @@ export function ToastBoxProvider({ children }) {
         show: false,
         type: "success",
         title: "",
-        content: null,
+        content: null
     });
 
     const hideTimer = useRef(null);
@@ -32,7 +32,7 @@ export function ToastBoxProvider({ children }) {
             show: true,
             type: toastType,
             title: ToastTitle,
-            content: ToastContent,
+            content: ToastContent
         });
 
         startHideTimer();
@@ -44,7 +44,7 @@ export function ToastBoxProvider({ children }) {
 
         setToast((currentToast) => ({
             ...currentToast,
-            show: false,
+            show: false
         }));
     }
 

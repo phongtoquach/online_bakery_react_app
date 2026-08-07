@@ -1,7 +1,11 @@
 import { Link } from "react-router";
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+
+import CartContext from "../context/CartContext";
 
 function CartPage() {
+
+    const { cart } = useContext(CartContext);
 
     useEffect(() => {
         console.log("[CartPage] đang chạy useEffect() của component CartPage !");
@@ -12,7 +16,8 @@ function CartPage() {
         };
     });
 
-    console.log("[CartPage] component CartPage render !");
+    console.log("[CartPage] component CartPage render ! Data của cart hiện tại :");
+    console.log(cart);
     
 
     return (
