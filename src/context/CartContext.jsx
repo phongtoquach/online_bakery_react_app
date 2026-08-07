@@ -5,22 +5,20 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
 
-    const [studentMark, setStudentMark] = useState("12");
+    const [cart, setCart] = useState([]);
 
-    //const { newProductsList } = useContext(ProductContext);
+    function addProductToCart(productId, quantity=1) {
+        console.log("[addProductToCart] chuan bi add vao cart - product ID : " + productId + " ; quantity : " + quantity);
 
-    //const [cart, setCart] = useState([]);
+        const productExists = cart.some((item) => item.id === product.id);
 
-    // function addToCart(product) {
-    //     const productExists = cart.some((item) => item.id === product.id);
+        if (productExists) {
+            alert("San pham da co trong gio hang !");
+            return;
+        }
 
-    //     if (productExists) {
-    //         alert("San pham da co trong gio hang !");
-    //         return;
-    //     }
-
-    //     setCart([...cart, product]);
-    // }
+        setCart([...cart, product]);
+    }
 
     // function removeFromCart(productId) {
     //     const newCart = cart.filter((item) => item.id !== productId);
@@ -38,10 +36,9 @@ export function CartProvider({ children }) {
     });
 
     console.log("[CartProvider] CartProvider được render !");
-    //console.log(newProductsList);
 
     return (
-        <CartContext.Provider value={{ studentMark, setStudentMark }}>
+        <CartContext.Provider value={{ addProductToCart }}>
             {children}
         </CartContext.Provider>
     )

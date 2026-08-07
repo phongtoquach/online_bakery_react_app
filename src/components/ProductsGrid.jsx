@@ -2,13 +2,13 @@ import { useContext, useEffect } from "react";
 import { Link } from "react-router";
 
 import ProductContext from "../context/ProductContext";
-//import CartContext from "../context/CartContext";
+import CartContext from "../context/CartContext";
 
 import { defaultProductImageSrc } from "../config/app_configs";
 
-function ProductsGrid() {
+function ProductsGrid({ filters, sortType }) {
     const { productsList } = useContext(ProductContext);
-    //const { addToCart } = useContext(CartContext);
+    const { addProductToCart } = useContext(CartContext);
     
 
     useEffect(() => {
@@ -72,7 +72,7 @@ function ProductsGrid() {
                                                 <span className="product-price">{product.price.toLocaleString("vi-VN") + "đ"}</span>
                                             </div>
                                             <div className="product-card-actions">
-                                                <button className="add-to-cart-btn">
+                                                <button className="add-to-cart-btn" onClick={() => addProductToCart(product.id)}>
                                                     <i className="fas fa-cart-plus"></i> Thêm vào giỏ
                                                 </button>
                                                 <Link to={productDetailsUrl} className="view-details-btn">
