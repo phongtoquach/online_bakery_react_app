@@ -38,12 +38,10 @@ function ProductsGrid({ filters, sortType }) {
                                 if (product.images.length > 0) {
                                     // neu mang images co phan tu thi lay phan tu dau tien (index 0) show ra
                                     productImageSrc = product.images[0];
-                                    console.log("[ProductsGrid] product " + product.id + " - có image : " + product.images[0]);
                                 }
                                 else {
                                     // neu mang images rong thi lay image mac dinh show ra
                                     productImageSrc = defaultProductImageSrc;
-                                    console.log("[ProductsGrid] product " + product.id + " - không có image. Dùng default image : " + defaultProductImageSrc);
                                 }
 
                                 // chuan bi product details URL
