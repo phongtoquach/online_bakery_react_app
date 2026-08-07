@@ -26,10 +26,39 @@ function Home() {
                         <p>Khám phá những mẫu bánh mới nhất, được chế biến tỉ mỉ để mang đến trải nghiệm ngọt ngào cho mọi dịp.</p>
                     </div>
 
-                    <ProductsGrid/>
+                    <ProductsGrid filters={{
+                        keyword: "hộp",
+                        //onlyFeatured: 1,
+                        minPrice: 150000,
+                        //maxPrice: 170000,
+                        //productIds: [123, "abc", 0, -1]
+                    }} sortType="price_desc" />
 
                     <div style={{ textAlign: 'center', marginTop: 'var(--space-2xl)' }}>
                         <Link to="/products" className="btn btn-outline">
+                            <i className="fas fa-th-large"></i> Xem thêm
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            <section className="section" style={{ paddingTop: '5px' }}>
+                <div className="container">
+                    <div className="section-title">
+                        <h2>Bánh nổi bật</h2>
+                        <p>Những món được yêu thích nhất của chúng tôi, mới ra lò mỗi sáng dành cho bạn.</p>
+                    </div>
+
+                    <ProductsGrid filters={{
+                        //keyword: "hộp",
+                        onlyFeatured: 1
+                        //minPrice: 150000,
+                        //maxPrice: 170000,
+                        //productIds: []
+                    }} sortType="default" />
+
+                    <div style={{ textAlign: 'center', marginTop: 'var(--space-2xl)' }}>
+                        <Link to="/products?onlyFeatured=1" className="btn btn-outline">
                             <i className="fas fa-th-large"></i> Xem thêm
                         </Link>
                     </div>

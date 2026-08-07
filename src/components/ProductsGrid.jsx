@@ -18,7 +18,7 @@ import { defaultProductImageSrc } from "../config/app_configs";
  * }
  */
 function ProductsGrid({ filters, sortType, limit }) {
-    const { productsList } = useContext(ProductContext);
+    const { productsList, handleFiltersData, getProductsByFilters, sortProductsByType } = useContext(ProductContext);
     const { addProductToCart } = useContext(CartContext);
     const { showToast } = useContext(ToastBoxContext);
 
@@ -57,252 +57,22 @@ function ProductsGrid({ filters, sortType, limit }) {
     console.log("[ProductsGrid] formattedFiltersData cuoi cung :");
     console.log(formattedFiltersData);
 
-    // BAT DAU SEARCH
+    // THUC HIEN SEARCH
     let filteredProductsList = getProductsByFilters(formattedFiltersData);
 
-
-    /**
-     * Ham format lai filtersData de dam bao tung attribute trong filtersData luon valid
-     * {
-     *      keyword: "",
-     *      onlyFeatured: 0,
-     *      minPrice: null,
-     *      maxPrice: null,
-     *      productIds: []
-     * }
-     */
-    function handleFiltersData(filtersData) {
-        let finalFilters = {
-            keyword: "",
-            onlyFeatured: 0,
-            minPrice: null,
-            maxPrice: null,
-            productIds: []
-        };
-
-        // check keyword
-        if (Object.hasOwn(filtersData, "keyword")) {
-            console.log("[handleFiltersData] filtersData co attr keyword ! Value : " + filtersData.keyword);
-            finalFilters.keyword = filtersData.keyword.trim();
-        }
-        else {
-            console.log("[handleFiltersData] filtersData KHONG CO attr keyword !");
-        }
-
-        // check onlyFeatured
-        if (Object.hasOwn(filtersData, "onlyFeatured")) {
-            console.log("[handleFiltersData] filtersData co attr onlyFeatured ! Value : " + filtersData.onlyFeatured);
-            // check co phai number ko
-            let onlyFeaturedVal = Number(filtersData.onlyFeatured);
-            if (Number.isNaN(onlyFeaturedVal)) {
-                onlyFeaturedVal = 0;
-            }
-            // chi chap nhan 0 hoac 1
-            if (onlyFeaturedVal != 0 && onlyFeaturedVal != 1) {
-                onlyFeaturedVal = 0;
-            }
-
-            finalFilters.onlyFeatured = onlyFeaturedVal;
-        }
-        else {
-            console.log("[handleFiltersData] filtersData KHONG CO attr onlyFeatured !");
-        }
-
-        // check minPrice
-        if (Object.hasOwn(filtersData, "minPrice")) {
-            console.log("[handleFiltersData] filtersData co attr minPrice ! Value : " + filtersData.minPrice);
-
-            if (filtersData.minPrice !== null) {
-                if (filtersData.minPrice === "") {
-                    console.log("[handleFiltersData] minPrice rong ! Set thanh null !");
-                    finalFilters.minPrice = null;
-                }
-                else {
-                    // check co phai number ko
-                    let minPrice_int = Number(filtersData.minPrice);
-                    if (Number.isNaN(minPrice_int)) {
-                        console.log("[handleFiltersData] minPrice khong phai number ! Set thanh null !");
-                        finalFilters.minPrice = null;
-                    }
-                    else {
-                        console.log("[handleFiltersData] minPrice la number : " + minPrice_int);
-                        finalFilters.minPrice = minPrice_int;
-                    }
-                }
-            }
-            else {
-                console.log("[handleFiltersData] minPrice = null ! Bo qua !");
-            }
-        }
-        else {
-            console.log("[handleFiltersData] filtersData KHONG CO attr minPrice !");
-        }
-
-        // check maxPrice
-        if (Object.hasOwn(filtersData, "maxPrice")) {
-            console.log("[handleFiltersData] filtersData co attr maxPrice ! Value : " + filtersData.maxPrice);
-
-            if (filtersData.maxPrice !== null) {
-                if (filtersData.maxPrice === "") {
-                    console.log("[handleFiltersData] maxPrice rong ! Set thanh null !");
-                    finalFilters.maxPrice = null;
-                }
-                else {
-                    // check co phai number ko
-                    let maxPrice_int = Number(filtersData.maxPrice);
-                    if (Number.isNaN(maxPrice_int)) {
-                        console.log("[handleFiltersData] maxPrice khong phai number ! Set thanh null !");
-                        finalFilters.maxPrice = null;
-                    }
-                    else {
-                        console.log("[handleFiltersData] maxPrice la number : " + maxPrice_int);
-                        finalFilters.maxPrice = maxPrice_int;
-                    }
-                }
-            }
-            else {
-                console.log("[handleFiltersData] maxPrice = null ! Bo qua !");
-            }
-        }
-        else {
-            console.log("[handleFiltersData] filtersData KHONG CO attr maxPrice !");
-        }
-
-        // check productIds
-        if (Object.hasOwn(filtersData, "productIds")) {
-            // check productIds co phai array khong
-            if (!Array.isArray(filtersData.productIds)) {
-                console.log("[handleFiltersData] productIds khong phai array ! Set thanh array rong !");
-                filtersData.productIds = [];
-            }
-
-            // Neu mang productIds co phan tu thi check tung phan tu trong
-            if (filtersData.productIds.length > 0) {
-                let finalProductIds = [];
-                for (let i=0; i < filtersData.productIds.length; i++) {
-                    let productId = filtersData.productIds[i];
-                    let productId_int = Number(productId);
-                    if (Number.isNaN(productId_int) || productId_int <= 0) {
-                        console.log("[handleFiltersData] productId " + productId + " khong hop le! Bo qua!");
-                        continue;
-                    }
-
-                    console.log("[handleFiltersData] productId " + productId_int + " HOP LE! Add vao mang finalProductIds!");
-                    finalProductIds.push(productId_int);
-                }
-
-                console.log("[handleFiltersData] Mang finalProductIds cuoi cung :");
-                console.log(finalProductIds);
-
-                finalFilters.productIds = finalProductIds;
-            }
-            else {
-                console.log("[handleFiltersData] productIds là array rong !");
-            }
-        }
-        else {
-            console.log("[handleFiltersData] filtersData KHONG CO attr productIds !");
-        }
-
-        return finalFilters;
+    // check sortType
+    let finalSortType = "";
+    if (sortType) {
+        console.log("[ProductsGrid] co truyen vao sortType : " + sortType);
+        finalSortType = sortType.trim();
     }
-
-
-    function getProductsByFilters(filtersData) {
-        console.log("[getProductsByFilters] filtersData :");
-        console.log(filtersData);
-
-        let lowerCaseKeyword = filtersData.keyword.toLocaleLowerCase();
-        // neu cac filter trong filtersData deu rong, null : lay tat ca product trong mang productsList
-        if (lowerCaseKeyword == "" && filtersData.onlyFeatured == 0 && filtersData.minPrice === null && filtersData.maxPrice === null && filtersData.productIds.length === 0) {
-            console.log("[getProductsByFilters] Khong co filter nao trong filtersData. Lay tat ca product trong mang productsList !");
-            return productsList;
-        }
-
-        const filteredProducts = productsList.filter((product) => {
-            console.log("[getProductsByFilters] product dang check :");
-            console.log(product);
-
-            // check filtersData.keyword
-            if (lowerCaseKeyword != "") {
-                console.log("[getProductsByFilters] Keyword khac rong : " + lowerCaseKeyword);
-                if (!product.name.toLocaleLowerCase().includes(lowerCaseKeyword)) {
-                    console.log("[getProductsByFilters] Product " + product.id + " : NOT MATCHED with keyword !");
-                    return false;
-                }
-                else {
-                    console.log("[getProductsByFilters] Product " + product.id + " : MATCHED with keyword !");
-                }
-            }
-            else {
-                console.log("[getProductsByFilters] Keyword rong ! Bo qua filter nay !");
-            }
-
-            // check filtersData.minPrice
-            if (filtersData.minPrice !== null) {
-                console.log("[getProductsByFilters] Min price khac null : " + filtersData.minPrice);
-                if (product.price < filtersData.minPrice) {
-                    console.log("[getProductsByFilters] Product " + product.id + " : NOT MATCHED with min price !");
-                    return false;
-                }
-                else {
-                    console.log("[getProductsByFilters] Product " + product.id + " : MATCHED with min price !");
-                }
-            }
-            else {
-                console.log("[getProductsByFilters] Min price null ! Bo qua filter nay !");
-            }
-
-            // check filtersData.maxPrice
-            if (filtersData.maxPrice !== null) {
-                console.log("[getProductsByFilters] Max price khac null : " + filtersData.maxPrice);
-                if (product.price > filtersData.maxPrice) {
-                    console.log("[getProductsByFilters] Product " + product.id + " : NOT MATCHED with max price !");
-                    return false;
-                }
-                else {
-                    console.log("[getProductsByFilters] Product " + product.id + " : MATCHED with max price !");
-                }
-            }
-            else {
-                console.log("[getProductsByFilters] Max price null ! Bo qua filter nay !");
-            }
-
-            // check filtersData.onlyFeatured
-            if (filtersData.onlyFeatured == 1) {
-                console.log("[getProductsByFilters] filter onlyFeatured = 1");
-                if (product.isFeatured == false) {
-                    console.log("[getProductsByFilters] Product " + product.id + " : co isFeatured = false. NOT MATCHED!");
-                    return false;
-                }
-                else {
-                    console.log("[getProductsByFilters] Product " + product.id + " : co isFeatured = true. MATCHED!");
-                }
-            }
-            else {
-                console.log("[getProductsByFilters] filter onlyFeatured = " + filtersData.onlyFeatured + " ! Bo qua filter nay !");
-            }
-
-            // check filtersData.productIds
-            if (filtersData.productIds.length > 0) {
-                if (!filtersData.productIds.includes(product.id)) {
-                    console.log("[getProductsByFilters] Product " + product.id + " khong nam trong mang filtersData.productIds ! NOT MATCHED!");
-                    return false;
-                }
-                else {
-                    console.log("[getProductsByFilters] Product " + product.id + " nam trong mang filtersData.productIds ! MATCHED!");
-                }
-            }
-
-            console.log("[getProductsByFilters] Product " + product.id + " DA PASSED het cac filter !");
-            return true;
-        });
-
-        console.log("[getProductsByFilters] Mang filteredProducts sau cung :");
-        console.log(filteredProducts);
-
-        return filteredProducts;
-    }
+    console.log("[ProductsGrid] finalSortType : " + finalSortType);
+    
+    // THUC HIEN SORT
+    let sortedFilteredProductsList = sortProductsByType(filteredProductsList, finalSortType); 
+    console.log("[ProductsGrid] Data cua sortedFilteredProductsList :");
+    console.log(sortedFilteredProductsList);
+    
     
     /**
      * Ham xu ly khi click nut Add to cart
@@ -332,12 +102,12 @@ function ProductsGrid({ filters, sortType, limit }) {
     return (
         <div className="products-grid-section">            
             {
-                filteredProductsList.length === 0 ? (
+                sortedFilteredProductsList.length === 0 ? (
                     <p>Không có sản phẩm nào hết</p>
                 ) : (
                     <div className="product-grid">
                         {
-                            filteredProductsList.map((product) => {
+                            sortedFilteredProductsList.map((product) => {
                                 // check mang images co rong hay ko 
                                 let productImageSrc = "";
                                 if (product.images.length > 0) {
