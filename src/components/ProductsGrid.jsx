@@ -3,13 +3,35 @@ import { Link } from "react-router";
 
 import ProductContext from "../context/ProductContext";
 import CartContext from "../context/CartContext";
+import ToastBoxContext from "../context/ToastBoxContext";
 
 import { defaultProductImageSrc } from "../config/app_configs";
 
 function ProductsGrid({ filters, sortType }) {
     const { productsList } = useContext(ProductContext);
     const { addProductToCart } = useContext(CartContext);
+    const { showToast } = useContext(ToastBoxContext);
     
+    function handleClickAddToCart(productId) {
+        const addToCartResult = addProductToCart(productId, 18);
+        console.log("[ProductsGrid - handleClickAddToCart] Data của addToCartResult :");
+        console.log(addToCartResult);
+
+        if (addToCartResult.success) {
+            const addedProductObj = addToCartResult.addedProduct;
+            const itemTotalPrice = addedProductObj.unitPrice * addedProductObj.quantity;
+            showToast("success", "Đã thêm vào giỏ hàng",
+                <>
+                    <span>{addedProductObj.name}</span><br/>
+                    <span>Số lượng trong giỏ: {addedProductObj.quantity}</span><br/>
+                    <span>Tổng tiền sản phẩm : {itemTotalPrice.toLocaleString("vi-VN")}đ</span><br/>
+                    <Link to="/cart">Xem giỏ hàng</Link>
+                </>);
+        }
+        else {
+            showToast("error", "Có lỗi xảy ra!", addToCartResult.errorMsg);
+        }
+    }
 
     useEffect(() => {
         console.log("[ProductsGrid] đang chạy useEffect() của component ProductsGrid !");
@@ -70,7 +92,7 @@ function ProductsGrid({ filters, sortType }) {
                                                 <span className="product-price">{product.price.toLocaleString("vi-VN") + "đ"}</span>
                                             </div>
                                             <div className="product-card-actions">
-                                                <button className="add-to-cart-btn" onClick={() => addProductToCart(product.id)}>
+                                                <button className="add-to-cart-btn" onClick={() => handleClickAddToCart(product.id)}>
                                                     <i className="fas fa-cart-plus"></i> Thêm vào giỏ
                                                 </button>
                                                 <Link to={productDetailsUrl} className="view-details-btn">

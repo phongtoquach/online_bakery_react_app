@@ -47,7 +47,11 @@ export function CartProvider({ children }) {
 
         if (quantity <= 0) {
             //showToastBox("error", "Có lỗi xảy ra!", "<span>Số lượng thêm vào giỏ hàng cần phải từ 1 trở lên.</span>");
-            return;
+            return {
+                success: false,
+                addedProduct: null,
+                errorMsg: "Số lượng thêm vào giỏ hàng cần phải từ 1 trở lên."
+            };
         }
 
         productId = Number(productId);
@@ -69,7 +73,11 @@ export function CartProvider({ children }) {
                 console.log("[CartProvider - addProductToCart] Neu tang them " + quantity + ", quantity hien tai trong cart cua product " + productId + " se la " + newCartItemQty + ". Vuot qua " + maxCartItemQuantity + ". Stop update quantity cua product nay trong cart !");
                 
                 //showToastBox("error", "Có lỗi xảy ra!", "Số lượng của sản phẩm này trong giỏ hàng chỉ được phép tối đa là " + maxCartItemQuantity);
-                return;
+                return {
+                    success: false,
+                    addedProduct: null,
+                    errorMsg: "Số lượng của sản phẩm này trong giỏ hàng chỉ được phép tối đa là " + maxCartItemQuantity
+                };
             }
 
             // sau khi check ok thi moi update cho quantity cua item nay trong mang cart
@@ -107,6 +115,12 @@ export function CartProvider({ children }) {
             //         <a href="cart.html">Xem giỏ hàng</a>`;
             // showToastBox("success", "Đã thêm vào giỏ hàng", toastMsg);
 
+            return {
+                success: true,
+                addedProduct: updatedCartItem,
+                errorMsg: ""
+            };
+
         }
         else {
             // Nếu trong mảng cart chưa có product với productId này
@@ -120,24 +134,32 @@ export function CartProvider({ children }) {
             if (!productObj) {
                 console.log("[CartProvider - addProductToCart] Product co ID " + productId + " khong ton tai trong mang productsList !");
                 //showToastBox("error", "Có lỗi xảy ra!", "<span>Sản phẩm này không tồn tại trong danh sách sản phẩm của shop.</span>");
-                return;
+                return {
+                    success: false,
+                    addedProduct: null,
+                    errorMsg: "Sản phẩm này không tồn tại trong danh sách sản phẩm của tiệm bánh"
+                };
             }
 
             // can check quantity them vao cart có vuot qua so luong cho phep cua 1 item trong cart hay ko
             if (quantity > maxCartItemQuantity) {
                 console.log("[CartProvider - addProductToCart] quantity chuan bi add vao cart cho product " + productObj.id + " la " + quantity + ". Vuot qua " + maxCartItemQuantity + ". Stop add to cart !");
                 //showToastBox("error", "Có lỗi xảy ra!", "Số lượng của sản phẩm này trong giỏ hàng chỉ được phép tối đa là " + maxCartItemQuantity);
-                return;
+                return {
+                    success: false,
+                    addedProduct: null,
+                    errorMsg: "Số lượng của sản phẩm này trong giỏ hàng chỉ được phép tối đa là " + maxCartItemQuantity
+                };
             }
 
             // check mang images product nay co rong ko
             let productImgSrc = "";
             if (productObj.images.length > 0) {
-                console.log("[CartProvider - addProductToCart] Product nay co image !");
+                //console.log("[CartProvider - addProductToCart] Product nay co image !");
                 productImgSrc = productObj.images[0];
             }
             else {
-                console.log("[CartProvider - addProductToCart] Product nay khong co image ! Su dung default image !");
+                //console.log("[CartProvider - addProductToCart] Product nay khong co image ! Su dung default image !");
                 productImgSrc = defaultProductImageSrc;
             }
 
@@ -165,13 +187,13 @@ export function CartProvider({ children }) {
 
                 return newCart;
             });
-        }
 
-        // SHOW TOASTBOX SUCCESS
-        // let toastMsg = `<span>` + cartItemObj.name + `</span><br>
-        //         <span>Số lượng trong giỏ: ` + cartItemObj.quantity + `</span><br>
-        //         <a href="cart.html">Xem giỏ hàng</a>`;
-        // showToastBox("success", "Đã thêm vào giỏ hàng", toastMsg);
+            return {
+                success: true,
+                addedProduct: newCartItem,
+                errorMsg: ""
+            };
+        }
     }
 
     // function removeFromCart(productId) {
