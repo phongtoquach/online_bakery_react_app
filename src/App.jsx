@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
 import ContactPage from "./pages/ContactPage";
 
 import Header from "./components/Header";
@@ -41,6 +42,7 @@ function App() {
               <Route path="/products" element={<ProductsPage/>} />
               <Route path="/products/:productId/:slug" element={<ProductDetailsPage/>} />
               <Route path="/cart" element={<CartPage/>} />
+              <Route path="/checkout" element={<CheckoutPage/>} />
               <Route path="/contact" element={<ContactPage/>} />
             </Routes>
           </ToastBoxProvider>

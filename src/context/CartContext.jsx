@@ -196,11 +196,27 @@ export function CartProvider({ children }) {
         }
     }
 
-    // function removeFromCart(productId) {
-    //     const newCart = cart.filter((item) => item.id !== productId);
+    function updateQuantity(productId, quantity) {
+        productId = Number(productId);
+        if (quantity <= 0) {
+            removeFromCart(productId);
+            return;
+        }
+        setCart((currentCart) =>
+            currentCart.map((item) =>
+                item.productId === productId ? { ...item, quantity: quantity } : item
+            )
+        );
+    }
 
-    //     setCart(newCart);
-    // }
+    function removeFromCart(productId) {
+        productId = Number(productId);
+        setCart((currentCart) => currentCart.filter((item) => item.productId !== productId));
+    }
+
+    function clearCart() {
+        setCart([]);
+    }
 
     useEffect(() => {
         console.log("[CartProvider] đang chạy useEffect() test !");
@@ -214,7 +230,7 @@ export function CartProvider({ children }) {
     console.log("[CartProvider] CartProvider được render !");
 
     return (
-        <CartContext.Provider value={{ cart, addProductToCart }}>
+        <CartContext.Provider value={{ cart, addProductToCart, updateQuantity, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>
     )

@@ -1,32 +1,137 @@
+import { useContext } from "react";
 import { Link } from "react-router";
-import { useEffect, useContext } from 'react';
-
 import CartContext from "../context/CartContext";
 
 function CartPage() {
+    const { cart, updateQuantity, removeFromCart, clearCart } = useContext(CartContext);
 
-    const { cart } = useContext(CartContext);
-
-    useEffect(() => {
-        console.log("[CartPage] đang chạy useEffect() của component CartPage !");
-        
-        // hàm cleanup
-        return () => {
-            console.log("[CartPage] đang chạy hàm cleanup của useEffect() !");
-        };
-    });
-
-    console.log("[CartPage] component CartPage render ! Data của cart hiện tại :");
-    console.log(cart);
-    
+    // Tính tổng tiền tạm tính
+    const subtotal = (cart || []).reduce(
+        (total, item) => total + (item.unitPrice || item.price || 0) * item.quantity,
+        0
+    );
 
     return (
-        <div className="container">
-            <h2>Trang Giỏ hàng - Cart Page</h2>
-            
-            <p>Đây là nội dung trang giỏ hàng</p>
-        </div>
-    )
+        <section className="section">
+            <div className="container">
+                <div className="section-title">
+                    <h2>Giỏ Hàng</h2>
+                    <p>Xem lại giỏ hàng của bạn và tiến hành thanh toán</p>
+                </div>
+
+                {/* Cart Empty State */}
+                {(!cart || cart.length === 0) ? (
+                    <div className="cart-empty" id="cartEmpty">
+                        <i className="fas fa-shopping-cart"></i>
+                        <h3>Giỏ hàng của bạn đang trống</h3>
+                        <p>Dường như bạn chưa thêm bất kỳ sản phẩm nào vào giỏ hàng</p>
+                        <Link to="/products" className="btn btn-primary">
+                            <i className="fas fa-shopping-bag"></i> Xem sản phẩm
+                        </Link>
+                    </div>
+                ) : (
+                    /* Cart Table & Summary Layout */
+                    <div className="cart-layout" id="cartShop">
+                        <div className="cart-table-wrapper">
+                            <table className="cart-table" id="cartTable">
+                                <thead>
+                                    <tr>
+                                        <th style={{ whiteSpace: "nowrap" }}>Tên Sản Phẩm</th>
+                                        <th style={{ whiteSpace: "nowrap" }}>Giá</th>
+                                        <th style={{ whiteSpace: "nowrap" }}>Số Lượng</th>
+                                        <th style={{ whiteSpace: "nowrap" }}>Tổng</th>
+                                        <th style={{ whiteSpace: "nowrap" }}>Xóa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cartBody">
+                                    {cart.map((item) => {
+                                        const price = item.unitPrice || item.price || 0;
+                                        const itemTotal = price * item.quantity;
+                                        const id = item.productId || item.id;
+
+                                        return (
+                                            <tr key={id}>
+                                                <td>
+                                                    <div className="cart-product">
+                                                        <img
+                                                            src={item.image || "/images/default_cake.png"}
+                                                            alt={item.name}
+                                                        />
+                                                        <div className="cart-product-info">
+                                                            <h4>{item.name}</h4>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="cart-unit-price" style={{ whiteSpace: "nowrap" }}>
+                                                    {price.toLocaleString("vi-VN")} đ
+                                                </td>
+                                                <td>
+                                                    <div className="cart-quantity">
+                                                        <input
+                                                            type="number"
+                                                            className="input--quantity"
+                                                            value={item.quantity}
+                                                            min="1"
+                                                            onChange={(e) => updateQuantity(id, Number(e.target.value))}
+                                                        />
+                                                    </div>
+                                                </td>
+                                                <td className="cart-total-price" style={{ whiteSpace: "nowrap" }}>
+                                                    {itemTotal.toLocaleString("vi-VN")} đ
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        type="button"
+                                                        className="remove-cart-item"
+                                                        onClick={() => removeFromCart(id)}
+                                                    >
+                                                        <i className="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+
+                            <div className="cart-actions">
+                                <button id="clearCartBtn" className="btn btn-outline" onClick={clearCart}>
+                                    <i className="fas fa-trash"></i> Clear Cart
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Cart Summary */}
+                        <div className="cart-summary" id="summaryRow">
+                            <h3>Tóm tắt đơn hàng</h3>
+                            <div className="summary-item" style={{ display: "flex", justifyContent: "space-between", margin: "1rem 0" }}>
+                                <span>Tạm tính:</span>
+                                <strong style={{ whiteSpace: "nowrap" }}>{subtotal.toLocaleString("vi-VN")} đ</strong>
+                            </div>
+                            <hr />
+                            <div className="summary-item" style={{ display: "flex", justifyContent: "space-between", margin: "1rem 0", fontSize: "1.2rem" }}>
+                                <span>Tổng cộng:</span>
+                                <strong style={{ color: "var(--color-primary, #d97706)", whiteSpace: "nowrap" }}>
+                                    {subtotal.toLocaleString("vi-VN")} đ
+                                </strong>
+                            </div>
+
+                            <Link to="/checkout" className="btn btn-primary" style={{ display: "block", textAlign: "center", width: "100%", marginTop: "1rem" }}>
+                                Tiến hành thanh toán
+                            </Link>
+                        </div>
+                    </div>
+                )}
+
+                {/* Continue Shopping */}
+                <div style={{ textAlign: "center", marginTop: "var(--space-2xl, 2rem)" }}>
+                    <Link to="/products" className="btn btn-outline">
+                        <i className="fas fa-arrow-left"></i> Continue Shopping
+                    </Link>
+                </div>
+            </div>
+        </section>
+    );
 }
 
 export default CartPage;
