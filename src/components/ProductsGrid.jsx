@@ -13,7 +13,7 @@ function ProductsGrid({ filters, sortType }) {
     const { showToast } = useContext(ToastBoxContext);
     
     function handleClickAddToCart(productId) {
-        const addToCartResult = addProductToCart(productId, 18);
+        const addToCartResult = addProductToCart(productId);
         console.log("[ProductsGrid - handleClickAddToCart] Data của addToCartResult :");
         console.log(addToCartResult);
 
