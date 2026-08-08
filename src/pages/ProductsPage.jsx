@@ -164,10 +164,16 @@ function ProductsPage() {
                                 </div>
                             </div>
 
-                            <div className="products-grid-section">
+                            <div className="products-grid-container">
                                 {
-                                    priceError === "" &&
+                                    priceError === "" ? (
                                         <ProductsGrid filters={filtersData} sortType={sortTypeStr} />
+                                    ) : (
+                                        <>
+                                            <p>Điều kiện tìm kiếm chưa hợp lệ !</p>
+                                            <p>Xin vui lòng kiểm tra lại bộ lọc sản phẩm !</p>
+                                        </>
+                                    )
                                 }
                             </div>
                         </div>

@@ -17,7 +17,7 @@ import { defaultProductImageSrc } from "../config/app_configs";
  *      productIds: []
  * }
  */
-function ProductsGrid({ filters, sortType, limit }) {
+function ProductsGrid({ filters, sortType, limit, showProductsCount }) {
     const { productsList, handleFiltersData, getProductsByFilters, sortProductsByType } = useContext(ProductContext);
     const { addProductToCart } = useContext(CartContext);
     const { showToast } = useContext(ToastBoxContext);
@@ -103,61 +103,66 @@ function ProductsGrid({ filters, sortType, limit }) {
         <div className="products-grid-section">            
             {
                 sortedFilteredProductsList.length === 0 ? (
-                    <p>Không có sản phẩm nào hết</p>
+                    <p>Không có sản phẩm nào được tìm thấy.</p>
                 ) : (
-                    <div className="product-grid">
-                        {
-                            sortedFilteredProductsList.map((product) => {
-                                // check mang images co rong hay ko 
-                                let productImageSrc = "";
-                                if (product.images.length > 0) {
-                                    // neu mang images co phan tu thi lay phan tu dau tien (index 0) show ra
-                                    productImageSrc = product.images[0];
-                                }
-                                else {
-                                    // neu mang images rong thi lay image mac dinh show ra
-                                    productImageSrc = defaultProductImageSrc;
-                                }
+                    <>
+                        <div className="products-count-div">
+                            <span>Có <strong>{sortedFilteredProductsList.length}</strong> sản phẩm</span>
+                        </div>
+                        <div className="product-grid">
+                            {
+                                sortedFilteredProductsList.map((product) => {
+                                    // check mang images co rong hay ko 
+                                    let productImageSrc = "";
+                                    if (product.images.length > 0) {
+                                        // neu mang images co phan tu thi lay phan tu dau tien (index 0) show ra
+                                        productImageSrc = product.images[0];
+                                    }
+                                    else {
+                                        // neu mang images rong thi lay image mac dinh show ra
+                                        productImageSrc = defaultProductImageSrc;
+                                    }
 
-                                // chuan bi product details URL
-                                let productDetailsUrl = "/products/" + product.id + "/" + product.slug;
+                                    // chuan bi product details URL
+                                    let productDetailsUrl = "/products/" + product.id + "/" + product.slug;
 
-                                return (
-                                    <div className="product-card" key={product.id} data-productid={product.id}>
-                                        <div className="product-card-image">
-                                            <Link to={productDetailsUrl}>
-                                                <img src={productImageSrc} alt={product.name}/>
-                                                {
-                                                    product.isFeatured && (
-                                                        <span className="product-card-tag">Nổi bật</span>
-                                                    )
-                                                }
-                                            </Link>
-                                        </div>
-                                        <div className="product-card-body">
-                                            <Link to={productDetailsUrl}>
-                                                <h3>{product.name}</h3>
-                                            </Link>
-                                            <div className="short-desc">
-                                                <Link to={productDetailsUrl}>{product.shortDescription}</Link>
-                                            </div>
-                                            <div className="product-card-footer">
-                                                <span className="product-price">{product.price.toLocaleString("vi-VN") + "đ"}</span>
-                                            </div>
-                                            <div className="product-card-actions">
-                                                <button className="add-to-cart-btn" onClick={() => handleClickAddToCart(product.id)}>
-                                                    <i className="fas fa-cart-plus"></i> Thêm vào giỏ
-                                                </button>
-                                                <Link to={productDetailsUrl} className="view-details-btn">
-                                                    <i className="fas fa-eye"></i> Xem chi tiết
+                                    return (
+                                        <div className="product-card" key={product.id} data-productid={product.id}>
+                                            <div className="product-card-image">
+                                                <Link to={productDetailsUrl}>
+                                                    <img src={productImageSrc} alt={product.name}/>
+                                                    {
+                                                        product.isFeatured && (
+                                                            <span className="product-card-tag">Nổi bật</span>
+                                                        )
+                                                    }
                                                 </Link>
                                             </div>
+                                            <div className="product-card-body">
+                                                <Link to={productDetailsUrl}>
+                                                    <h3>{product.name}</h3>
+                                                </Link>
+                                                <div className="short-desc">
+                                                    <Link to={productDetailsUrl}>{product.shortDescription}</Link>
+                                                </div>
+                                                <div className="product-card-footer">
+                                                    <span className="product-price">{product.price.toLocaleString("vi-VN") + "đ"}</span>
+                                                </div>
+                                                <div className="product-card-actions">
+                                                    <button className="add-to-cart-btn" onClick={() => handleClickAddToCart(product.id)}>
+                                                        <i className="fas fa-cart-plus"></i> Thêm vào giỏ
+                                                    </button>
+                                                    <Link to={productDetailsUrl} className="view-details-btn">
+                                                        <i className="fas fa-eye"></i> Xem chi tiết
+                                                    </Link>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </>
                 )
             }
         </div>
