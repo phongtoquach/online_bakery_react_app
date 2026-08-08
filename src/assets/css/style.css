@@ -320,7 +320,6 @@ select {
   background: rgba(216, 179, 132, 0.12);
 }
 
-
 /* Search Box */
 .search-box {
   position: relative;
@@ -1227,6 +1226,7 @@ select {
   box-shadow: var(--shadow-sm);
   overflow: hidden;
   border: 1px solid rgba(232, 213, 192, 0.3);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .cart-table {
@@ -1367,6 +1367,7 @@ select {
   position: sticky;
   top: calc(var(--header-height) + var(--space-xl));
   border: 1px solid rgba(232, 213, 192, 0.3);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .cart-summary h3 {
@@ -1677,7 +1678,6 @@ select {
   h2 {
     font-size: 1.4rem;
   }
-
 
   .hero-content h1 {
     font-size: 1.85rem;

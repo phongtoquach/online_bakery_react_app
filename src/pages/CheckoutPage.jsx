@@ -114,7 +114,7 @@ function CheckoutPage() {
       showToast(
         "success",
         "Đặt hàng thành công!",
-        `Đơn hàng #${generatedId} của bạn đã được tiếp nhận.`,
+        `Đơn hàng của bạn đã được tiếp nhận.`,
       );
 
     // 3. Chuyển sang màn hình Cảm ơn

@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { useEffect } from 'react';
 
 import ProductsGrid from "../components/ProductsGrid";
+import Slider from "../components/Slider";
 
 function Home() {
 
@@ -19,6 +20,7 @@ function Home() {
 
     return (
         <>
+            <Slider />
             <section className="section" style={{ paddingBottom: '75px' }}>
                 <div className="container">
                     <div className="section-title">

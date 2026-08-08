@@ -544,6 +544,7 @@ input[type="number"] {
   padding: 21px;
   border: 1px solid rgb(61, 43, 31);
   border-radius: 16px;
+  margin-bottom: 20px;
 }
 
 .cart__howToCash h2 {
@@ -591,4 +592,9 @@ input[type="number"] {
   font-weight: 700;
   font-family: var(--font-accent);
   letter-spacing: 1px;
+}
+
+.cart__chooseMethod {
+  border: 1px solid rgb(61, 43, 31);
+  border-radius: 16px;
 }
