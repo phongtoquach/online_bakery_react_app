@@ -6,12 +6,12 @@ const initialFormData = {
     name: "",
     phone: "",
     email: "",
-    subject: "",
     message: ""
 };
 
 function ContactPage() {
     const [formData, setFormData] = useState(initialFormData);
+    const [loginData, setLoginData] = useState({ email: "", password: "" });
     const { showToast } = useContext(ToastBoxContext);
 
     function handleInputChange(event) {
@@ -30,7 +30,6 @@ function ContactPage() {
             name: formData.name.trim(),
             phone: formData.phone.trim(),
             email: formData.email.trim(),
-            subject: formData.subject.trim(),
             message: formData.message.trim()
         };
 
@@ -73,6 +72,21 @@ function ContactPage() {
         setFormData(initialFormData);
     }
 
+    function handleLoginChange(event) {
+        const { name, value } = event.target;
+        setLoginData((currentData) => ({ ...currentData, [name]: value }));
+    }
+
+    function handleLoginSubmit(event) {
+        event.preventDefault();
+
+        if (!loginData.email.trim() || !loginData.password) {
+            showToast("error", "Chưa đủ thông tin", "Vui lòng nhập email và mật khẩu.");
+            return;
+        }
+
+    }
+
     return (
         <>
             <section className="contact-hero">
@@ -81,16 +95,21 @@ function ContactPage() {
                         <aside className="contact-info-wrapper">
                             <span className="contact-eyebrow">Maison Sweet Bakery</span>
                             <h2>Xin chào!</h2>
-                            <p className="contact-intro">Ghé thăm cửa hàng để tận hưởng những chiếc bánh tươi mới mỗi ngày.</p>
+                            <p className="contact-intro">Đăng nhập để theo dõi đơn hàng và nhận những ưu đãi dành riêng cho bạn.</p>
 
-                            <div className="contact-location">
-                                <h3>Địa chỉ Hồ Chí Minh</h3>
-                                <ul className="contact-details">
-                                    <li><i className="fas fa-map-marker-alt"></i><span>2A Ba Gia, Phường Tân Sơn Nhất, TP. Hồ Chí Minh</span></li>
-                                    <li><i className="fas fa-clock"></i><span>Mở cửa mỗi ngày: 8:00 – 22:00</span></li>
-                                    <li><i className="fas fa-phone"></i><a href="tel:02888883388">028.8888.3388</a></li>
-                                    <li><i className="fas fa-envelope"></i><a href="mailto:hi@cailonuong.vn">hi@cailonuong.vn</a></li>
-                                </ul>
+                            <div className="contact-login">
+                                <h3><i className="fas fa-user-circle"></i> Đăng nhập</h3>
+                                <form onSubmit={handleLoginSubmit}>
+                                    <div className="form-group">
+                                        <label htmlFor="loginEmail">Email</label>
+                                        <input id="loginEmail" name="email" type="email" placeholder="Nhập email" value={loginData.email} onChange={handleLoginChange} required />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="loginPassword">Mật khẩu</label>
+                                        <input id="loginPassword" name="password" type="password" placeholder="Nhập mật khẩu" value={loginData.password} onChange={handleLoginChange} required />
+                                    </div>
+                                    <button type="submit" className="btn btn-primary contact-login-btn">Đăng nhập</button>
+                                </form>
                             </div>
 
                         </aside>
@@ -102,7 +121,7 @@ function ContactPage() {
                             </div>
                             <form onSubmit={handleSubmit} noValidate>
                                 <div className="form-group">
-                                    <label htmlFor="contactName">Họ và tên <span>*</span></label>
+                                    <label htmlFor="contactName">Họ và tên</label>
                                     <input id="contactName" name="name" type="text" placeholder="Họ và tên" value={formData.name} onChange={handleInputChange} required />
                                 </div>
                                 <div className="form-group">
@@ -110,15 +129,11 @@ function ContactPage() {
                                     <input id="contactEmail" name="email" type="email" placeholder="Email" value={formData.email} onChange={handleInputChange} />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="contactPhone">Số điện thoại <span>*</span></label>
+                                    <label htmlFor="contactPhone">Số điện thoại</label>
                                     <input id="contactPhone" name="phone" type="tel" placeholder="Số điện thoại" value={formData.phone} onChange={handleInputChange} required />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="contactSubject">Tiêu đề</label>
-                                    <input id="contactSubject" name="subject" type="text" placeholder="Tiêu đề" value={formData.subject} onChange={handleInputChange} />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="contactMessage">Nội dung <span>*</span></label>
+                                    <label htmlFor="contactMessage">Nội dung</label>
                                     <textarea
                                         id="contactMessage"
                                         name="message"
