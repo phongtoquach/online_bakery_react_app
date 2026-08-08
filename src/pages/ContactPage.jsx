@@ -117,7 +117,7 @@ function ContactPage() {
                         <div className="contact-form-wrapper">
                             <div className="contact-form-heading">
                                 <h2>Liên hệ với chúng tôi</h2>
-                                <p>Vui lòng điền thông tin theo mẫu bên dưới. Mọi thắc mắc về sản phẩm và dịch vụ, chúng tôi <strong>sẽ phản hồi trong thời gian sớm nhất.</strong></p>
+                                <p>Vui lòng điền thông tin theo mẫu bên dưới.</p>
                             </div>
                             <form onSubmit={handleSubmit} noValidate>
                                 <div className="form-group">
