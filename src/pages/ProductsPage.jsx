@@ -1,7 +1,9 @@
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { useEffect, useContext, useState } from 'react';
 
 import "../assets/css/products.css";
+
+import { websiteName } from "../config/app_configs";
 
 import ProductContext from "../context/ProductContext";
 import CartContext from "../context/CartContext";
@@ -9,23 +11,55 @@ import CartContext from "../context/CartContext";
 import ProductsGrid from "../components/ProductsGrid";
 
 function ProductsPage() {
-  useEffect(() => {
-    document.title = "Product";
-  }, []);
+    useEffect(() => {
+        document.title = "Sản phẩm | " + websiteName;
+    }, []);
 
-    const [filtersFormData, setFiltersFormData] = useState({
+    
+    // check URL params
+    const [searchParams] = useSearchParams();
+
+    const keywordUrlParam = searchParams.get("keyword");
+    console.log("[ProductsPage] URL param keyword : " + keywordUrlParam);
+
+    let defaultFiltersFormData = {
         keyword: "",
         onlyFeatured: 0,
         minPrice: "",
         maxPrice: ""
-    }); 
+    };
 
-    const [filterErrors, setFilterErrors] = useState({
-        price: ""
-    });
+    if (keywordUrlParam !== null && keywordUrlParam.trim() !== "") {
+        console.log("[ProductsPage] URL param keyword ton tai va khac rong !");
+        defaultFiltersFormData.keyword = keywordUrlParam.trim();
+    }
+
+    //console.log("[ProductsPage] Data của defaultFiltersFormData ban dau : ");
+    //console.log(defaultFiltersFormData);
+
+    const [filtersFormData, setFiltersFormData] = useState(defaultFiltersFormData);
+    
+    // const [filtersFormData, setFiltersFormData] = useState({
+    //     keyword: "",
+    //     onlyFeatured: 0,
+    //     minPrice: "",
+    //     maxPrice: ""
+    // });
+
     const [priceError, setPriceError] = useState("");
 
     const [sortOption, setSortOption] = useState("default");
+
+
+    // copy filtersFormData ra 1 object moi
+    const filtersData = {...filtersFormData};
+    // gan value cua bien useState sortOption lai cho 1 bien binh thuong
+    const sortTypeStr = sortOption;
+
+    console.log("[ProductsPage] Data cua filtersData cuoi cung :");
+    console.log(filtersData);
+    console.log("[ProductsPage] sortTypeStr cuoi cung : " + sortTypeStr);
+    console.log("[ProductsPage] priceError sau cung : " + priceError);
 
     useEffect(() => {
         console.log("[ProductsPage] đang chạy useEffect() của component ProductsPage !");
@@ -37,16 +71,6 @@ function ProductsPage() {
     });
 
     console.log("[ProductsPage] component ProductsPage render !");
-
-    // copy filtersFormData ra 1 object moi
-    const filtersData = {...filtersFormData};
-    // gan value cua bien useState sortOption lai cho 1 bien binh thuong
-    const sortTypeStr = sortOption;
-
-    console.log("[ProductsPage] Data cua filtersData cuoi cung :");
-    console.log(filtersData);
-    console.log("[ProductsPage] sortTypeStr cuoi cung : " + sortTypeStr);
-    console.log("[ProductsPage] priceError sau cung : " + priceError);
 
 
     function validatePrice(minPrice, maxPrice) {
@@ -70,7 +94,7 @@ function ProductsPage() {
 
 
     function handleChangeInput(attrKey, inputVal) {
-        let trimmedInputVal = inputVal.trim();
+        //let trimmedInputVal = inputVal.trim();
 
         setFiltersFormData(currentFiltersFormData => {
             console.log("[handleChangeInput - setFiltersFormData] bien attrKey : " + attrKey + " ; inputVal : " + inputVal);

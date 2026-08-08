@@ -1,13 +1,15 @@
 import { Link } from "react-router";
 import { useEffect } from 'react';
 
+import { websiteName } from "../config/app_configs";
+
 import ProductsGrid from "../components/ProductsGrid";
 import Slider from "../components/Slider";
 
 function Home() {
-  useEffect(() => {
-    document.title = "Home";
-  }, []);
+    useEffect(() => {
+        document.title = websiteName;
+    }, []);
 
     useEffect(() => {
         console.log("[Home] đang chạy useEffect() của component Home !");
@@ -32,12 +34,12 @@ function Home() {
                     </div>
 
                     <ProductsGrid filters={{
-                        keyword: "hộp",
+                        //keyword: "hộp",
                         //onlyFeatured: 1,
-                        minPrice: 150000,
+                        //minPrice: 150000,
                         //maxPrice: 170000,
                         //productIds: [123, "abc", 0, -1]
-                    }} sortType="price_desc" />
+                    }} sortType="default" />
 
                     <div style={{ textAlign: 'center', marginTop: 'var(--space-2xl)' }}>
                         <Link to="/products" className="btn btn-outline">

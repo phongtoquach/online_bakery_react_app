@@ -96,7 +96,7 @@ function Slider() {
     }, 5000);
 
     return () => {
-      console.log("[Slider] cleanup interval auto-play !");
+      //console.log("[Slider] cleanup interval auto-play !");
       clearInterval(interval);
     };
   }, [isPaused, totalSlides]);
@@ -115,10 +115,10 @@ function Slider() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  console.log(
-    "[Slider] component Slider render !, slide hiện tại:",
-    currentIndex,
-  );
+  // console.log(
+  //   "[Slider] component Slider render !, slide hiện tại:",
+  //   currentIndex,
+  // );
 
   return (
     <section

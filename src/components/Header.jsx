@@ -4,6 +4,8 @@ import { NavLink, Link } from "react-router";
 //import ProductContext from "../context/ProductContext";
 import CartContext from "../context/CartContext";
 
+import HeaderSearchSection from "../components/HeaderSearchSection";
+
 function Header() {
 
     const { cart } = useContext(CartContext);
@@ -38,10 +40,9 @@ function Header() {
                     <NavLink to="/cart" end className={ ({isActive}) => isActive ? "nav-link active" : "nav-link" }><i className="fas fa-shopping-bag"></i> Giỏ hàng</NavLink>
                     <NavLink to="/contact" className={ ({isActive}) => isActive ? "nav-link active" : "nav-link" }><i className="fas fa-envelope"></i> Liên hệ</NavLink>
                 </nav>
-                <div className="search-box">
-                    <i className="fas fa-search search-icon"></i>
-                    <input type="text" id="txtHeaderSearch" placeholder="Tìm sản phẩm..."/>
-                </div>
+                
+                <HeaderSearchSection/>
+
                 <NavLink to="/cart" className="cart-icon">
                     <i className="fas fa-shopping-cart"></i>
                     <span className="cart-badge" id="headerCartBadgeText">{cart.length}</span>
