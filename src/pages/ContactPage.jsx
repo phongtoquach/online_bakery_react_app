@@ -33,36 +33,6 @@ function ContactPage() {
             message: formData.message.trim()
         };
 
-        if (!cleanFormData.name || !cleanFormData.phone || !cleanFormData.message) {
-            showToast("error", "Chưa đủ thông tin", "Vui lòng nhập họ tên, số điện thoại và nội dung liên hệ.");
-            return;
-        }
-
-        if (cleanFormData.name.length < 2) {
-            showToast("error", "Họ tên chưa hợp lệ", "Họ và tên cần có ít nhất 2 ký tự.");
-            return;
-        }
-
-        const normalizedPhone = cleanFormData.phone.replace(/[.\s-]/g, "");
-        const vietnamPhonePattern = /^(0\d{9,10}|\+84\d{9,10})$/;
-
-        if (!vietnamPhonePattern.test(normalizedPhone)) {
-            showToast("error", "Số điện thoại chưa hợp lệ", "Vui lòng nhập số điện thoại Việt Nam hợp lệ.");
-            return;
-        }
-
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (cleanFormData.email && !emailPattern.test(cleanFormData.email)) {
-            showToast("error", "Email chưa hợp lệ", "Vui lòng kiểm tra lại địa chỉ email.");
-            return;
-        }
-
-        if (cleanFormData.message.length < 10) {
-            showToast("error", "Nội dung quá ngắn", "Nội dung liên hệ cần có ít nhất 10 ký tự.");
-            return;
-        }
-
         // TODO: Gửi cleanFormData tới API/backend tại đây khi dự án có máy chủ.
         showToast(
             "success",
