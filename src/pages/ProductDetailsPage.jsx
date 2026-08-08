@@ -6,6 +6,7 @@ import "../assets/css/product_details.css";
 import ProductContext from "../context/ProductContext";
 //import CartContext from "../context/CartContext";
 
+import ProductThumbnails from "../components/ProductThumbnails";
 import AddToCartSection from "../components/AddToCartSection";
 import ProductsGrid from "../components/ProductsGrid";
 
@@ -86,14 +87,7 @@ function ProductDetailsPage() {
                     <div className="product-details-section">
                         <div className="product-details-layout">
 
-                            <div className="product-gallery" id="productGallery">
-                                <div className="main-image"><img src="images/banh-thien-nga-1.jpg" alt="" /></div>
-                                <div className="gallery-thumbnails" id="productGalleryThumbnails">
-                                    <img src="images/banh-thien-nga-1.jpg" alt="image thumbnail" className="product-image-thumbnail active"/>
-                                    <img src="images/banh-thien-nga-2.jpg" alt="image thumbnail" className="product-image-thumbnail"/>
-                                    <img src="images/banh-thien-nga-3.jpg" alt="image thumbnail" className="product-image-thumbnail"/>
-                                </div>
-                            </div>
+                            <ProductThumbnails productImages={productObj.images}/>
 
                             <div className="product-info" id="productInfo">
                                 <h1>{productObj.name}</h1>
