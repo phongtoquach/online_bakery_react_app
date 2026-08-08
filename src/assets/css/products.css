@@ -2,6 +2,10 @@
 	max-width: 1440px;
 }
 
+.products-container-section .section-title {
+	margin-bottom: var(--space-3xl);
+}
+
 /* === Filter Sidebar (Products Page) === */
 .filter-sidebar {
 	background: var(--color-white);
