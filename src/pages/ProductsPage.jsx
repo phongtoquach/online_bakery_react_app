@@ -167,7 +167,7 @@ function ProductsPage() {
                             <div className="products-grid-container">
                                 {
                                     priceError === "" ? (
-                                        <ProductsGrid filters={filtersData} sortType={sortTypeStr} />
+                                        <ProductsGrid filters={filtersData} sortType={sortTypeStr} showProductsCount={1} />
                                     ) : (
                                         <>
                                             <p>Điều kiện tìm kiếm chưa hợp lệ !</p>

@@ -98,7 +98,6 @@ function ProductsGrid({ filters, sortType, limit, showProductsCount }) {
         }
     }
 
-
     return (
         <div className="products-grid-section">            
             {
@@ -106,9 +105,15 @@ function ProductsGrid({ filters, sortType, limit, showProductsCount }) {
                     <p>Không có sản phẩm nào được tìm thấy.</p>
                 ) : (
                     <>
-                        <div className="products-count-div">
-                            <span>Có <strong>{sortedFilteredProductsList.length}</strong> sản phẩm</span>
-                        </div>
+                        {
+                            (showProductsCount && Number(showProductsCount) === 1) &&
+                                (
+                                    <div className="products-count-div" style={{ marginBottom: '20px' }}>
+                                        <span>Có <strong>{sortedFilteredProductsList.length}</strong> sản phẩm được tìm thấy</span>
+                                    </div>
+                                )
+                        }
+                        
                         <div className="product-grid">
                             {
                                 sortedFilteredProductsList.map((product) => {
