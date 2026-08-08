@@ -23,7 +23,7 @@ function ContactPage() {
         }));
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
 
         const cleanFormData = {
@@ -63,13 +63,27 @@ function ContactPage() {
             return;
         }
 
-        // TODO: Gửi cleanFormData tới API/backend tại đây khi dự án có máy chủ.
-        showToast(
-            "success",
-            "Đã ghi nhận liên hệ",
-            `Cảm ơn ${cleanFormData.name}. Chúng tôi sẽ phản hồi bạn sớm nhất có thể.`
-        );
-        setFormData(initialFormData);
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(cleanFormData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Contact request failed with status ${response.status}`);
+            }
+
+            showToast(
+                "success",
+                "Đã ghi nhận liên hệ",
+                `Cảm ơn ${cleanFormData.name}. Chúng tôi sẽ phản hồi bạn sớm nhất có thể.`
+            );
+            setFormData(initialFormData);
+        } catch (error) {
+            console.error("Unable to submit contact form:", error);
+            showToast("error", "Gửi liên hệ thất bại", "Vui lòng thử lại sau.");
+        }
     }
 
     function handleLoginChange(event) {
