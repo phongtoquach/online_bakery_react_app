@@ -1990,10 +1990,6 @@ select {
   font-size: 1rem;
 }
 
-.contact-form-wrapper .form-group label span {
-  color: var(--color-danger);
-}
-
 .contact-form-wrapper .form-group input,
 .contact-form-wrapper .form-group select,
 .contact-form-wrapper .form-group textarea {

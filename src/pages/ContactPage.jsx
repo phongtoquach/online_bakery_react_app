@@ -99,12 +99,12 @@ function ContactPage() {
                         <form onSubmit={handleSubmit}>
                             <div className="contact-form-row">
                                 <div className="form-group">
-                                    <label htmlFor="contactName">Họ và tên <span>*</span></label>
+                                    <label htmlFor="contactName">Họ và tên</label>
                                     <input id="contactName" name="name" type="text" placeholder="Họ Và Tên" value={formData.name} onChange={handleInputChange} required />
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="contactEmail">Email <span>*</span></label>
+                                    <label htmlFor="contactEmail">Email</label>
                                     <input id="contactEmail" name="email" type="email" placeholder="Email@.com" value={formData.email} onChange={handleInputChange} required />
                                 </div>
                             </div>
@@ -115,7 +115,7 @@ function ContactPage() {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="contactSubject">Chủ đề <span>*</span></label>
+                                <label htmlFor="contactSubject">Chủ đề</label>
                                 <select id="contactSubject" name="subject" value={formData.subject} onChange={handleInputChange} required>
                                     <option value="" disabled>Chọn một chủ đề...</option>
                                     <option value="custom-order">Đặt bánh theo yêu cầu</option>
@@ -126,7 +126,7 @@ function ContactPage() {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="contactMessage">Nội dung tin nhắn <span>*</span></label>
+                                <label htmlFor="contactMessage">Nội dung tin nhắn</label>
                                 <textarea
                                     id="contactMessage"
                                     name="message"
