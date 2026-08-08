@@ -119,9 +119,7 @@ function ContactPage() {
                                 <select id="contactSubject" name="subject" value={formData.subject} onChange={handleInputChange} required>
                                     <option value="" disabled>Chọn một chủ đề...</option>
                                     <option value="custom-order">Đặt bánh theo yêu cầu</option>
-                                    <option value="product">Thông tin sản phẩm</option>
-                                    <option value="feedback">Góp ý và phản hồi</option>
-                                    <option value="other">Khác</option>
+                                   <option value="other">Khác</option>
                                 </select>
                             </div>
 
