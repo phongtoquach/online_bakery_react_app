@@ -1,18 +1,50 @@
-import { useContext, useState } from "react";
-
-import ToastBoxContext from "../context/ToastBoxContext";
+import { useState } from "react";
 
 const initialFormData = {
     name: "",
-    phone: "",
     email: "",
+    phone: "",
+    subject: "",
     message: ""
 };
 
+const contactCards = [
+    {
+        icon: "fas fa-map-marker-alt",
+        title: "Địa chỉ của chúng tôi",
+        content: (
+            <p>123 Đường Nguyễn Huệ<br />Quận 1, TP. Hồ Chí Minh</p>
+        )
+    },
+    {
+        icon: "fas fa-phone-alt",
+        title: "Gọi cho chúng tôi",
+        content: (
+            <p><a href="tel:+845551234567">(+84) 555 123 4567</a><br />Thứ 2 - Thứ 7, 9:00 - 20:00</p>
+        )
+    },
+    {
+        icon: "fas fa-envelope",
+        title: "Email của chúng tôi",
+        content: (
+            <p>
+                <a href="mailto:maisonsweet@gmail.com">maisonsweet@gmail.com</a><br />
+                <a href="mailto:maisonsweetsupport@gmail.com">maisonsweetsupport@gmail.com</a>
+            </p>
+        )
+    },
+    {
+        icon: "fas fa-clock",
+        title: "Giờ mở cửa",
+        content: (
+            <p>Thứ 2 - Thứ 7: 7:00 - 20:00<br />Chủ nhật: 8:00 - 18:00</p>
+        )
+    }
+];
+
 function ContactPage() {
     const [formData, setFormData] = useState(initialFormData);
-    const [loginData, setLoginData] = useState({ email: "", password: "" });
-    const { showToast } = useContext(ToastBoxContext);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     function handleInputChange(event) {
         const { name, value } = event.target;
@@ -21,109 +53,105 @@ function ContactPage() {
             ...currentFormData,
             [name]: value
         }));
+        setIsSubmitted(false);
     }
 
     function handleSubmit(event) {
         event.preventDefault();
-
-        const cleanFormData = {
-            name: formData.name.trim(),
-            phone: formData.phone.trim(),
-            email: formData.email.trim(),
-            message: formData.message.trim()
-        };
-
-        // TODO: Gửi cleanFormData tới API/backend tại đây khi dự án có máy chủ.
-        showToast(
-            "success",
-            "Đã ghi nhận liên hệ",
-            `Cảm ơn ${cleanFormData.name}. Chúng tôi sẽ phản hồi bạn sớm nhất có thể.`
-        );
+        setIsSubmitted(true);
         setFormData(initialFormData);
     }
 
-    function handleLoginChange(event) {
-        const { name, value } = event.target;
-        setLoginData((currentData) => ({ ...currentData, [name]: value }));
-    }
-
-    function handleLoginSubmit(event) {
-        event.preventDefault();
-
-        if (!loginData.email.trim() || !loginData.password) {
-            showToast("error", "Chưa đủ thông tin", "Vui lòng nhập email và mật khẩu.");
-            return;
-        }
-
-    }
-
     return (
-        <>
+        <main className="contact-page">
             <section className="contact-hero">
-                <div className="container">
-                    <div className="contact-layout">
-                        <aside className="contact-info-wrapper">
-                            <span className="contact-eyebrow">Maison Sweet Bakery</span>
-                            <h2>Xin chào!</h2>
-                            <p className="contact-intro">Đăng nhập để theo dõi đơn hàng và nhận những ưu đãi dành riêng cho bạn.</p>
-
-                            <div className="contact-login">
-                                <h3><i className="fas fa-user-circle"></i> Đăng nhập</h3>
-                                <form onSubmit={handleLoginSubmit}>
-                                    <div className="form-group">
-                                        <label htmlFor="loginEmail">Email</label>
-                                        <input id="loginEmail" name="email" type="email" placeholder="Nhập email" value={loginData.email} onChange={handleLoginChange} required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="loginPassword">Mật khẩu</label>
-                                        <input id="loginPassword" name="password" type="password" placeholder="Nhập mật khẩu" value={loginData.password} onChange={handleLoginChange} required />
-                                    </div>
-                                    <button type="submit" className="btn btn-primary contact-login-btn">Đăng nhập</button>
-                                </form>
-                            </div>
-
-                        </aside>
-
-                        <div className="contact-form-wrapper">
-                            <div className="contact-form-heading">
-                                <h2>Liên hệ với chúng tôi</h2>
-                                <p>Vui lòng điền thông tin theo mẫu bên dưới. Mọi thắc mắc về sản phẩm và dịch vụ, chúng tôi <strong>sẽ phản hồi trong thời gian sớm nhất.</strong></p>
-                            </div>
-                            <form onSubmit={handleSubmit} noValidate>
-                                <div className="form-group">
-                                    <label htmlFor="contactName">Họ và tên</label>
-                                    <input id="contactName" name="name" type="text" placeholder="Họ và tên" value={formData.name} onChange={handleInputChange} required />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="contactEmail">Email</label>
-                                    <input id="contactEmail" name="email" type="email" placeholder="Email" value={formData.email} onChange={handleInputChange} />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="contactPhone">Số điện thoại</label>
-                                    <input id="contactPhone" name="phone" type="tel" placeholder="Số điện thoại" value={formData.phone} onChange={handleInputChange} required />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="contactMessage">Nội dung</label>
-                                    <textarea
-                                        id="contactMessage"
-                                        name="message"
-                                        placeholder="Nội dung"
-                                        value={formData.message}
-                                        onChange={handleInputChange}
-                                        required
-                                    ></textarea>
-                                </div>
-
-                                <button type="submit" className="btn btn-primary contact-submit-btn">
-                                    <i className="fas fa-paper-plane"></i> Gửi liên hệ
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                <div className="container contact-hero-content">
+                    <h1>Liên hệ với chúng tôi</h1>
+                    <span className="contact-title-line" aria-hidden="true"></span>
+                    <p>
+                        Chúng tôi rất mong nhận được tin từ bạn. Dù là câu hỏi, ý kiến<br className="contact-desktop-break" />
+                        đóng góp hay yêu cầu đặt hàng theo yêu cầu — hãy liên hệ với<br className="contact-desktop-break" />
+                        chúng tôi bất cứ lúc nào!
+                    </p>
                 </div>
             </section>
 
-        </>
+            <section className="contact-content-section">
+                <div className="container contact-layout">
+                    <div className="contact-details" aria-label="Thông tin liên hệ">
+                        {contactCards.map((card) => (
+                            <article className="contact-info-card" key={card.title}>
+                                <span className="contact-info-icon">
+                                    <i className={card.icon}></i>
+                                </span>
+                                <h2>{card.title}</h2>
+                                {card.content}
+                            </article>
+                        ))}
+                    </div>
+
+                    <div className="contact-form-wrapper">
+                        <h2 className="contact-form-title">
+                            <i className="fas fa-paper-plane"></i>
+                            Gửi tin nhắn cho chúng tôi
+                        </h2>
+
+                        <form onSubmit={handleSubmit}>
+                            <div className="contact-form-row">
+                                <div className="form-group">
+                                    <label htmlFor="contactName">Họ và tên <span>*</span></label>
+                                    <input id="contactName" name="name" type="text" placeholder="Họ Và Tên" value={formData.name} onChange={handleInputChange} required />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="contactEmail">Email <span>*</span></label>
+                                    <input id="contactEmail" name="email" type="email" placeholder="Email@.com" value={formData.email} onChange={handleInputChange} required />
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="contactPhone">Số điện thoại</label>
+                                <input id="contactPhone" name="phone" type="tel" placeholder="(+84) 000-000-0000" value={formData.phone} onChange={handleInputChange} />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="contactSubject">Chủ đề <span>*</span></label>
+                                <select id="contactSubject" name="subject" value={formData.subject} onChange={handleInputChange} required>
+                                    <option value="" disabled>Chọn một chủ đề...</option>
+                                    <option value="custom-order">Đặt bánh theo yêu cầu</option>
+                                    <option value="product">Thông tin sản phẩm</option>
+                                    <option value="feedback">Góp ý và phản hồi</option>
+                                    <option value="other">Khác</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="contactMessage">Nội dung tin nhắn <span>*</span></label>
+                                <textarea
+                                    id="contactMessage"
+                                    name="message"
+                                    placeholder="Hãy cho chúng tôi biết chúng tôi có thể giúp gì cho bạn...."
+                                    value={formData.message}
+                                    onChange={handleInputChange}
+                                    required
+                                ></textarea>
+                            </div>
+
+                            {isSubmitted && (
+                                <p className="contact-success-message" role="status">
+                                    <i className="fas fa-check-circle"></i>
+                                    Cảm ơn bạn! Tin nhắn đã được ghi nhận.
+                                </p>
+                            )}
+
+                            <button type="submit" className="btn btn-primary contact-submit-btn">
+                                <i className="fas fa-paper-plane"></i> Gửi tin nhắn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
     );
 }
 

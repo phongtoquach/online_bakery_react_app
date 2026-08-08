@@ -2049,6 +2049,18 @@ select {
   font-size: 1.15rem;
 }
 
+.contact-success-message {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(107, 142, 90, 0.35);
+  border-radius: 8px;
+  color: var(--color-success);
+  background: rgba(107, 142, 90, 0.08);
+}
+
 .contact-submit-btn:hover {
   background: linear-gradient(90deg, #765137, #876543);
 }
