@@ -82,7 +82,6 @@ function ContactPage() {
             setFormData(initialFormData);
         } catch (error) {
             console.error("Unable to submit contact form:", error);
-            showToast("error", "Gửi liên hệ thất bại", "Vui lòng thử lại sau.");
         }
     }
 
