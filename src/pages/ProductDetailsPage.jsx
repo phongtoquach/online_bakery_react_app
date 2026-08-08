@@ -6,6 +6,7 @@ import "../assets/css/product_details.css";
 import ProductContext from "../context/ProductContext";
 //import CartContext from "../context/CartContext";
 
+import AddToCartSection from "../components/AddToCartSection";
 import ProductsGrid from "../components/ProductsGrid";
 
 function ProductDetailsPage() {
@@ -100,25 +101,9 @@ function ProductDetailsPage() {
                                 <div className="product-description" id="productShortDescription">
                                     {productObj.shortDescription}
                                 </div>
-                                <div className="quantity-selector">
-                                    <label>Quantity:</label>
-                                    <div className="quantity-controls">
-                                        <button type="button" className="btn-minus" id="btnQuantityMinus">
-                                            <i className="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" id="txtProductQuantity" value="1" onChange={(event) => handleChangeQuantityAdded(event.target.value)} />
-                                        <button type="button" className="btn-plus" id="btnQuantityPlus">
-                                            <i className="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="quantity-error-box" id="quantityErrorBox"></div>
+                                
+                                <AddToCartSection productId={productObj.id} />
 
-                                <div className="product-detail-actions">
-                                    <button className="add-to-cart-btn" id="addToCartBtn" onClick={() => handleAdd()}>
-                                        <i className="fas fa-cart-plus"></i> Thêm vào giỏ
-                                    </button>
-                                </div>
                                 <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--color-border)', marginTop: 'var(--space-md)' }}>
                                     <p style={{ fontSize: '0.9rem', color: 'var(--color-text-light)' }}>
                                         <i className="fas fa-truck" style={{ color: "var(--color-gold)", marginRight: "0.5rem" }}></i>
