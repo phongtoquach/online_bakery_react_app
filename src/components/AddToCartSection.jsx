@@ -193,7 +193,7 @@ function AddToCartSection({ productId }) {
                     <>
                         <span>{addedProductObj.name}</span><br/>
                         <span>Số lượng trong giỏ: {addedProductObj.quantity}</span><br/>
-                        <span>Tổng tiền sản phẩm : {itemTotalPrice.toLocaleString("vi-VN")}đ</span><br/>
+                        <span>Tổng tiền sản phẩm : {itemTotalPrice.toLocaleString("vi-VN")}đ</span><br/><br/>
                         <Link to="/cart">Xem giỏ hàng</Link>
                     </>);
             }

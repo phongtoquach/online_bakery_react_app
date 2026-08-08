@@ -22,6 +22,9 @@ function ProductsPage() {
     const keywordUrlParam = searchParams.get("keyword");
     console.log("[ProductsPage] URL param keyword : " + keywordUrlParam);
 
+    const onlyFeaturedParam = searchParams.get("onlyFeatured");
+    console.log("[ProductsPage] URL param onlyFeatured : " + onlyFeaturedParam);
+
     let defaultFiltersFormData = {
         keyword: "",
         onlyFeatured: 0,
@@ -32,6 +35,11 @@ function ProductsPage() {
     if (keywordUrlParam !== null && keywordUrlParam.trim() !== "") {
         console.log("[ProductsPage] URL param keyword ton tai va khac rong !");
         defaultFiltersFormData.keyword = keywordUrlParam.trim();
+    }
+
+    if (onlyFeaturedParam !== null && Number(onlyFeaturedParam) === 1) {
+        console.log("[ProductsPage] URL param onlyFeaturedParam ton tai va bang 1 !");
+        defaultFiltersFormData.onlyFeatured = Number(onlyFeaturedParam);
     }
 
     //console.log("[ProductsPage] Data của defaultFiltersFormData ban dau : ");

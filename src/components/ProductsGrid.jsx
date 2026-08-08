@@ -72,6 +72,21 @@ function ProductsGrid({ filters, sortType, limit, showProductsCount }) {
     let sortedFilteredProductsList = sortProductsByType(filteredProductsList, finalSortType); 
     console.log("[ProductsGrid] Data cua sortedFilteredProductsList :");
     console.log(sortedFilteredProductsList);
+
+    // check prop limit
+    console.log("[ProductsGrid] prop limit duoc truyen vao : " + limit);
+    if (limit) {
+        let limitVal = Number(limit);
+        if (Number.isNaN(limitVal)) {
+            console.log("[ProductsGrid] prop limit khong phai number !");
+            limitVal = 0;
+        }
+
+        if (limitVal > 0) {
+            console.log("[ProductsGrid] limitVal = " + limitVal + ". chuan bi slice !");
+            sortedFilteredProductsList = sortedFilteredProductsList.slice(0, limitVal);
+        }
+    }
     
     
     /**
@@ -89,7 +104,7 @@ function ProductsGrid({ filters, sortType, limit, showProductsCount }) {
                 <>
                     <span>{addedProductObj.name}</span><br/>
                     <span>Số lượng trong giỏ: {addedProductObj.quantity}</span><br/>
-                    <span>Tổng tiền sản phẩm : {itemTotalPrice.toLocaleString("vi-VN")}đ</span><br/>
+                    <span>Tổng tiền sản phẩm : {itemTotalPrice.toLocaleString("vi-VN")}đ</span><br/><br/>
                     <Link to="/cart">Xem giỏ hàng</Link>
                 </>);
         }

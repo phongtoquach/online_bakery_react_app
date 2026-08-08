@@ -39,7 +39,7 @@ function Home() {
                         //minPrice: 150000,
                         //maxPrice: 170000,
                         //productIds: [123, "abc", 0, -1]
-                    }} sortType="default" />
+                    }} sortType="default" limit={6} />
 
                     <div style={{ textAlign: 'center', marginTop: 'var(--space-2xl)' }}>
                         <Link to="/products" className="btn btn-outline">
@@ -62,7 +62,7 @@ function Home() {
                         //minPrice: 150000,
                         //maxPrice: 170000,
                         //productIds: []
-                    }} sortType="default" />
+                    }} sortType="default" limit={3} />
 
                     <div style={{ textAlign: 'center', marginTop: 'var(--space-2xl)' }}>
                         <Link to="/products?onlyFeatured=1" className="btn btn-outline">

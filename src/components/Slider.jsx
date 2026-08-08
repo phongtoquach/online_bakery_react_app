@@ -86,9 +86,9 @@ function Slider() {
 
   // Tự động chuyển slide sau mỗi 5s (Auto-play)
   useEffect(() => {
-    console.log(
-      "[Slider] đang chạy useEffect() auto-play của component Slider !",
-    );
+    // console.log(
+    //   "[Slider] đang chạy useEffect() auto-play của component Slider !",
+    // );
     if (isPaused) return;
 
     const interval = setInterval(() => {
