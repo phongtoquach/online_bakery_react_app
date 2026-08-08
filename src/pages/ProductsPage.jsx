@@ -9,6 +9,9 @@ import CartContext from "../context/CartContext";
 import ProductsGrid from "../components/ProductsGrid";
 
 function ProductsPage() {
+  useEffect(() => {
+    document.title = "Product";
+  }, []);
 
     const [filtersFormData, setFiltersFormData] = useState({
         keyword: "",

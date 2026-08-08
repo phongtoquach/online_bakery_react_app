@@ -116,6 +116,10 @@ function CartQuantityInput({ productId, itemQuantity }) {
 function CartPage() {
   const { cart, removeFromCart, clearCart } = useContext(CartContext);
 
+  useEffect(() => {
+    document.title = "Cart";
+  }, []);
+
   // Tính tổng tiền tạm tính
   const subtotal = (cart || []).reduce(
     (total, item) =>

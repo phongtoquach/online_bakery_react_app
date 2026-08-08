@@ -1,10 +1,14 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router";
 import CartContext from "../context/CartContext";
 import ToastBoxContext from "../context/ToastBoxContext";
 import "../assets/css/checkout.css";
 
 function CheckoutPage() {
+  useEffect(() => {
+    document.title = "Checkout";
+  }, []);
+
   const { cart, updateQuantity, clearCart } = useContext(CartContext);
   const { showToast } = useContext(ToastBoxContext);
 

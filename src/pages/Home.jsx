@@ -5,6 +5,9 @@ import ProductsGrid from "../components/ProductsGrid";
 import Slider from "../components/Slider";
 
 function Home() {
+  useEffect(() => {
+    document.title = "Home";
+  }, []);
 
     useEffect(() => {
         console.log("[Home] đang chạy useEffect() của component Home !");
